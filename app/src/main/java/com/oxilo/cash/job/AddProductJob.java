@@ -1,0 +1,49 @@
+package com.oxilo.cash.job;
+
+import android.content.Context;
+import android.util.Log;
+
+import com.android.volley.Response;
+import com.oxilo.cash.Webservices.AddProduct;
+import com.oxilo.cash.Webservices.UpdateProduct;
+import com.oxilo.cash.event.AddFinishedEvent;
+import com.oxilo.cash.event.UpdateFinishedEvent;
+import com.oxilo.cash.modal.Product;
+import com.oxilo.cash.modal.Update;
+import com.oxilo.cash.volley.AbstractVolleyJob;
+import com.path.android.jobqueue.Params;
+
+import de.greenrobot.event.EventBus;
+
+/**
+ * Created by ericbasendra on 04/12/15.
+ */
+public class AddProductJob<T> extends AbstractVolleyJob implements Response.Listener<T>, Response.ErrorListener{
+    public Update savingsTypes;
+    Context mContext;
+    String name,price,tax;
+    String id;
+    public static final String TAG = "AddProductJob";
+    public AddProductJob(Context mContext, Update savingsTypes, String name, String price, String tax) {
+        super(new Params(Priority.HIGH).requireNetwork().addTags(TAG));
+        this.mContext = mContext;
+        this.savingsTypes = savingsTypes;
+        this.name = name;
+        this.price = price;
+        this.tax = tax;
+    }
+
+    @Override
+    public void onRun() throws Throwable {
+        AddProduct addProduct = new AddProduct(this,this,name,price,tax);
+        addProduct.invoke();
+        savingsTypes = addProduct.savingsTypes;
+
+    }
+
+    @Override
+    public void onResponse(T response) {
+        Log.e("REEE",response.toString());
+        EventBus.getDefault().post(new AddFinishedEvent((Product) response));
+    }
+}

@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">Cash</string>
+    <!-- TODO: Volley error helper -->
+    <string name="no_network_connection" translatable="false">No network connection found</string>
+    <string name="generic_server_down" translatable="false">Server down</string>
+    <string name="generic_server_timeout" translatable="false">Server Timeout</string>
+    <string name="generic_error" translatable="false">No internet</string>
+    <string name="no_internet" translatable="false">No internet</string>
+    <string name="parsing_failed" translatable="false">Parsing Failure</string>
+    <string name="auth_failed" translatable="false">Authentication Failure</string>
+
+    <string name="response_success" translatable="false">SUCCESS</string>
+    <string name="response_error" translatable="false">ERROR</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="action_search">Search</string>
+    <string name="action_add">Add</string>
+    <string name="action_hide_menu">Hide menu</string>
+
+    <string name="error_field_required">This field is required</string>
+</resources>
