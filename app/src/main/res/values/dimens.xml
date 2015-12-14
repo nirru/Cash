@@ -9,4 +9,11 @@
     <dimen name="list_item_avatar_size">40dp</dimen>
 
     <dimen name="card_height">90dp</dimen>
+
+
+    <dimen name="valueSelector_text">30dp</dimen>
+    <dimen name="valueSelector_label_text">14dp</dimen>
+    <dimen name="valueSelector_margin_top">14dp</dimen>
+    <dimen name="valueSelector_button_hMargin">25dp</dimen>
+    <dimen name="valueSelector_button_insideMargin">10dp</dimen>
 </resources>

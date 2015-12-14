@@ -1,24 +1,20 @@
 package com.oxilo.cash.adapter;
 
 import android.content.Context;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.Filter;
-import android.widget.Filterable;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.oxilo.cash.R;
-import com.oxilo.cash.custom.ProductFilter;
-import com.oxilo.cash.modal.Product;
 import com.oxilo.cash.modal.ProductList;
+import com.oxilo.cash.ui.ValueSelector;
 import com.oxilo.cash.util.AnimationUtils;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,16 +25,16 @@ import me.zhanghai.android.materialprogressbar.MaterialProgressBar;
 /**
  * Created by ericbasendra on 02/12/15.
  */
-public class ProductListAdapter<T> extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class InvoiceAdapter<T> extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private final int VIEW_ITEM = 1;
     private final int VIEW_PROG = 0;
-    private Context mContext;
+    public Context mContext;
     public List<T> dataSet;
     public  List<T> filteredProductList;
     private static MyClickListener myClickListener;
     private int mLastPosition = 5;
 
-    public ProductListAdapter(List<T> productLists,Context mContext) {
+    public InvoiceAdapter(List<T> productLists, Context mContext) {
         this.mContext = mContext;
         this.dataSet = productLists;
         this.filteredProductList = new ArrayList<>();
@@ -139,7 +135,7 @@ public class ProductListAdapter<T> extends RecyclerView.Adapter<RecyclerView.Vie
         if (viewType == VIEW_ITEM){
             View itemView = LayoutInflater.
                     from(parent.getContext()).
-                    inflate(R.layout.custom_card, parent, false);
+                    inflate(R.layout.card_invoice, parent, false);
             vh = new ProductViewHolder(itemView);
         }
         else if(viewType == VIEW_PROG){
@@ -157,11 +153,11 @@ public class ProductListAdapter<T> extends RecyclerView.Adapter<RecyclerView.Vie
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if(holder instanceof ProductViewHolder){
             T dataItem = dataSet.get(position);
+            ((ProductViewHolder) holder).productNameView.setText(((ProductList)dataItem).getName());
+           ((ProductViewHolder) holder).productPriceView.setText(((ProductList)dataItem).getPrice());
+            ((ProductViewHolder) holder).productPriceView.setText(((ProductList)dataItem).getPrice());
+            ((ProductViewHolder) holder).valueTextView.setText(((ProductList)dataItem).getCurrentCount()+"");
             setAnimation(holder,position);
-            ((ProductViewHolder) holder).nameView.setText(((ProductList)dataItem).getName());
-            ((ProductViewHolder) holder).priceView.setText(parseStringToDouble(((ProductList)dataItem).getPrice()));
-            ((ProductViewHolder) holder).taxView.setText(parseStringToDouble(((ProductList)dataItem).getTaxclass()));
-            ((ProductViewHolder)holder).checkBoxView.setChecked(((ProductList)dataItem).getChecked());
         }else{
             ((ProgressViewHolder)holder).progressBar.setIndeterminate(true);
         }
@@ -212,20 +208,26 @@ public class ProductListAdapter<T> extends RecyclerView.Adapter<RecyclerView.Vie
     // Complex data items may need more than one view per item, and
     // you provide access to all the views for a data item in a view holder
     public static class ProductViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-        TextView nameView,priceView,taxView;
-        TextView updateView,deleteView;
-        CheckBox checkBoxView;
+        TextView valueTextView;
+        EditText productNameView;
+
+
+        EditText productPriceView;
+        View minusButton;
+        View plusButton;
+
+        Handler handler = new Handler();
+
         public ProductViewHolder(View itemView) {
             super(itemView);
-            checkBoxView = (CheckBox)itemView.findViewById(R.id.checkbox);
-            nameView = (TextView)itemView.findViewById(R.id.action_name);
-            priceView = (TextView)itemView.findViewById(R.id.action_price);
-            taxView = (TextView)itemView.findViewById(R.id.action_tax);
-            updateView = (TextView)itemView.findViewById(R.id.update);
-            deleteView = (TextView)itemView.findViewById(R.id.delete);
-            updateView.setOnClickListener(this);
-            deleteView.setOnClickListener(this);
-            checkBoxView.setOnClickListener(this);
+            valueTextView = (TextView) itemView.findViewById(R.id.valueTextView);
+            productNameView = (EditText)itemView.findViewById(R.id.product_name);
+            productPriceView = (EditText)itemView.findViewById(R.id.product_price);
+            minusButton = itemView.findViewById(R.id.minusButton);
+            plusButton = itemView.findViewById(R.id.plusButton);
+
+            minusButton.setOnClickListener(this);
+            plusButton.setOnClickListener(this);
         }
 
         @Override

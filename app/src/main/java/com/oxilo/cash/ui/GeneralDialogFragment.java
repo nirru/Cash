@@ -4,6 +4,7 @@ import android.app.DialogFragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatButton;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 
 import com.oxilo.cash.ApplicationController;
 import com.oxilo.cash.R;
+import com.oxilo.cash.job.AddProductJob;
 import com.oxilo.cash.job.UpdateProductJob;
 import com.oxilo.cash.modal.Update;
 import com.path.android.jobqueue.JobManager;
@@ -77,8 +79,12 @@ public class GeneralDialogFragment extends DialogFragment {
 
     private void initUiWidget(View view){
         nameView = (TextView)view.findViewById(R.id.action_name);
-        priceView = (TextView)view.findViewById(R.id.action_tax);
+        priceView = (TextView)view.findViewById(R.id.action_price);
         taxView = (TextView)view.findViewById(R.id.action_tax);
+
+        nameView.setHint("" + mName);
+        priceView.setHint("" + mPrice);
+        taxView.setHint("" + mTax);
 
 
         AppCompatButton btn_cancel= (AppCompatButton)view.findViewById(R.id.action_cancel_btn);
@@ -94,12 +100,52 @@ public class GeneralDialogFragment extends DialogFragment {
         btn_update.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                nameView.setError(null);
+                priceView.setError(null);
+                taxView.setError(null);
 
-                JobManager jobManager = ApplicationController.getInstance().getJobManager();
-                String id1 = id11;
-                jobManager.addJobInBackground(new UpdateProductJob<Update>(getActivity(),new Update(),nameView.getText().toString(),priceView.getText().toString()
-                        ,taxView.getText().toString(),id11));
-                dismiss();
+                // Store values at the time of the login attempt.
+                String campaign_title = nameView.getText().toString();
+                String promotion_message = priceView.getText().toString();
+                String start_date = taxView.getText().toString();
+
+                boolean cancel = false;
+                View focusView = null;
+
+                // Check for a valid Campaign Title.
+                if (TextUtils.isEmpty(campaign_title)) {
+                    nameView.setError(getString(R.string.error_field_required));
+                    focusView = nameView;
+                    cancel = true;
+                }
+
+                // Check for a valid Promotion Message.
+                else if (TextUtils.isEmpty(promotion_message)) {
+                    priceView.setError(getString(R.string.error_field_required));
+                    focusView = priceView;
+                    cancel = true;
+                }
+                // Check for a valid Start Date.
+                else if (TextUtils.isEmpty(start_date)) {
+                    taxView.setError(getString(R.string.error_field_required));
+                    focusView = taxView;
+                    cancel = true;
+                }
+
+                if (cancel) {
+                    // There was an error; don't attempt login and focus the first
+                    // form field with an error.
+                    focusView.requestFocus();
+                } else {
+                    JobManager jobManager = ApplicationController.getInstance().getJobManager();
+                    String id1 = id11;
+                    jobManager.addJobInBackground(new UpdateProductJob<Update>(getActivity(),new Update(),nameView.getText().toString(),priceView.getText().toString()
+                            ,taxView.getText().toString(),id11));
+                    dismiss();
+
+                }
+
+
             }
         });
     }

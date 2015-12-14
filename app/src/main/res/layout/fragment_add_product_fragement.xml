@@ -91,7 +91,7 @@
                     android:layout_height="wrap_content"
                     android:hint="Tax"
                     android:textColor="@android:color/darker_gray"
-                    android:inputType="number"
+                    android:inputType="numberDecimal"
                     android:imeOptions="actionDone"
                     android:maxLines="1"
                     android:singleLine="true" />

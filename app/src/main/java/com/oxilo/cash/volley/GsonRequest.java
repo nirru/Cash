@@ -72,6 +72,7 @@ public class GsonRequest<T> extends Request<T> {
                        String url,
                        Type type,
                        Map<String, String> params,
+                       Map<String, String> headers,
                        Response.Listener<T> listener,
                        Response.ErrorListener errorListener) {
 
@@ -79,7 +80,7 @@ public class GsonRequest<T> extends Request<T> {
         this.type = type;
         this.params = params;
         this.listener = listener;
-        this.headers = null;
+        this.headers = headers;
         mGson = new Gson();
     }
 
@@ -97,6 +98,8 @@ public class GsonRequest<T> extends Request<T> {
     protected void deliverResponse(T response) {
         listener.onResponse(response);
     }
+
+
 
     @Override
     protected Response<T> parseNetworkResponse(NetworkResponse response) {

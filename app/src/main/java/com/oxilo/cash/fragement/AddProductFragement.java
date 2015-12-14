@@ -112,7 +112,7 @@ public class AddProductFragement extends Fragment {
         mLoginFormView = view.findViewById(R.id.login_form);
         mProgressView = view.findViewById(R.id.login_progress);
         nameView = (TextView)view.findViewById(R.id.action_name);
-        priceView = (TextView)view.findViewById(R.id.action_tax);
+        priceView = (TextView)view.findViewById(R.id.action_price);
         taxView = (TextView)view.findViewById(R.id.action_tax);
 
 

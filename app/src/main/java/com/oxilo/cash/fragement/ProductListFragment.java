@@ -15,6 +15,7 @@ import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
@@ -26,6 +27,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.Toast;
 
 import com.oxilo.cash.ApplicationController;
@@ -179,6 +181,13 @@ public class ProductListFragment extends Fragment implements SearchView.OnQueryT
                             jobManager.addJobInBackground(new DeleteProductJob<Update>(getActivity(),new Update(),id));
                         }
                 }
+                else if (v.getId() == R.id.checkbox){
+                    if (groupItem != null){
+                        ProductList productList = groupItem.productLists.get(position);
+                        CheckBox checkBox = (CheckBox)v.findViewById(R.id.checkbox);
+                        productList.setChecked(checkBox.isChecked());
+                    }
+                }
             }
         });
 
@@ -330,6 +339,20 @@ public class ProductListFragment extends Fragment implements SearchView.OnQueryT
 //            }
 //        });
 
+        AppCompatButton invoice_btn = (AppCompatButton) view.findViewById(R.id.invoice_action);
+        invoice_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ArrayList<ProductList> productLists = new ArrayList<ProductList>();
+                for (ProductList productList:groupItem.productLists) {
+                    if (productList.getChecked())
+                        productLists.add(productList);
+                }
+                Fragment fragment  = InvoiceFragement.newInstance(productLists,"");
+                ActivityUtils.launchFragementWithAnimation(fragment,getActivity());
+            }
+        });
+
     }
 
     private void init(){
@@ -353,6 +376,7 @@ public class ProductListFragment extends Fragment implements SearchView.OnQueryT
         productListAdapter.addItems(event.getmProduct().getProductList());
         for (ProductList productList: event.getmProduct().getProductList())
         {
+            productList.setCurrentCount(1);
             productListAdapter.addItem(productList);
         }
 

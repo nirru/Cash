@@ -15,12 +15,15 @@ import android.view.View;
 import com.oxilo.cash.ApplicationController;
 import com.oxilo.cash.R;
 import com.oxilo.cash.fragement.AddProductFragement;
+import com.oxilo.cash.fragement.InvoiceFragement;
 import com.oxilo.cash.fragement.ProductListFragment;
 import com.oxilo.cash.modal.Product;
 import com.oxilo.cash.util.ActivityUtils;
 import com.path.android.jobqueue.JobManager;
 
-public class MainActivity extends AppCompatActivity implements ProductListFragment.OnFragmentInteractionListener,AddProductFragement.OnFragmentInteractionListener{
+public class MainActivity extends AppCompatActivity implements ProductListFragment.OnFragmentInteractionListener,
+        AddProductFragement.OnFragmentInteractionListener,
+        InvoiceFragement.OnFragmentInteractionListener{
 
     DrawerLayout drawerLayout;
     ActionBarDrawerToggle drawerToggle;

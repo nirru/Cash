@@ -17,11 +17,7 @@
         android:paddingBottom="5dp"
         android:textAppearance="?android:textAppearanceMedium"/>
 
-    <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp">
+
 
         <EditText
             android:id="@+id/action_name"
@@ -33,13 +29,7 @@
             android:maxLines="1"
             android:singleLine="true" />
 
-    </android.support.design.widget.TextInputLayout>
 
-    <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp">
 
         <EditText
             android:id="@+id/action_price"
@@ -52,13 +42,8 @@
             android:imeOptions="actionNext"
             android:singleLine="true" />
 
-    </android.support.design.widget.TextInputLayout>
 
-    <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp">
+
 
         <EditText
             android:id="@+id/action_tax"
@@ -66,12 +51,11 @@
             android:layout_height="wrap_content"
             android:hint="Tax"
             android:textColor="@android:color/darker_gray"
-            android:inputType="number"
+            android:inputType="numberDecimal"
             android:imeOptions="actionDone"
             android:maxLines="1"
             android:singleLine="true" />
 
-    </android.support.design.widget.TextInputLayout>
 
 
     <LinearLayout

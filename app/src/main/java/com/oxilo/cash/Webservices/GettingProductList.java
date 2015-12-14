@@ -40,6 +40,7 @@ public class GettingProductList{
                 URL,
                 new TypeToken<Product>() {}.getType(),
                 prepareHasMap(),
+                prepareContentType(),
                 success,
                 error);
         request.setSoftTTLDefault(24 * 60 * 60 * 1000); //pull from cache if not invalidated for 1 week
@@ -50,6 +51,11 @@ public class GettingProductList{
     private HashMap prepareHasMap(){
         HashMap<String,String> hm = new HashMap<String,String>();
         hm.put("firstName", "");
+        return hm;
+    }
+    private HashMap prepareContentType(){
+        HashMap<String,String> hm = new HashMap<String,String>();
+        hm.put("Content-Type", "application/x-www-form-urlencoded");
         return hm;
     }
 

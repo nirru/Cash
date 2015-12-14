@@ -20,4 +20,7 @@
     <string name="action_hide_menu">Hide menu</string>
 
     <string name="error_field_required">This field is required</string>
+
+    <string name="valueSelector_label">Qnty</string>
+    <string name="valueBarLabel">CURRENT VALUE</string>
 </resources>
