@@ -196,7 +196,7 @@ public class InvoiceFragement extends Fragment {
         ProductList product = productList.get(pos);
         if(product.getCurrentCount() < maxValue) {
             product.setCurrentCount(product.getCurrentCount() + 1);
-            product.setPrice((Double.valueOf(product.getPrice().toString()) * product.getCurrentCount()) + "");
+            product.setPrice((Double.valueOf(product.getBasePrice().toString()) * product.getCurrentCount()) + "");
             invoiceAdapter.notifyItemChanged(pos);
             subTotal();
         }
@@ -206,7 +206,8 @@ public class InvoiceFragement extends Fragment {
         ProductList product = productList.get(pos);
         if(product.getCurrentCount() > minValue) {
             product.setCurrentCount(product.getCurrentCount() - 1);
-            product.setPrice((Double.valueOf(product.getPrice().toString()) * product.getCurrentCount()) + "");
+            String dd = product.getPrice().toString();
+            product.setPrice((Double.valueOf(product.getBasePrice().toString()) * product.getCurrentCount()) + "");
             invoiceAdapter.notifyItemChanged(pos);
             subTotal();
         }
@@ -218,7 +219,7 @@ public class InvoiceFragement extends Fragment {
             subtotal += Double.valueOf(product.getPrice());
         }
         subTotal.setText("" + subtotal) ;
-        total.setText("" + (int)subtotal);
+        total.setText("" + subtotal);
         return subtotal;
     }
 

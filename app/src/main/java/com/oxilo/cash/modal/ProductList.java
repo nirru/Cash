@@ -28,6 +28,7 @@ public class ProductList implements Parcelable{
     private boolean isChecked;
 
     private int currentCount;
+    private String basePrice;
 
     protected ProductList(Parcel in) {
         id = in.readString();
@@ -36,6 +37,7 @@ public class ProductList implements Parcelable{
         taxclass = in.readString();
         isChecked = in.readByte() != 0;
         currentCount = in.readInt();
+        basePrice = in.readString();
     }
 
     public static final Creator<ProductList> CREATOR = new Creator<ProductList>() {
@@ -140,6 +142,13 @@ public class ProductList implements Parcelable{
     }
 
 
+    public String getBasePrice(){
+        return basePrice;
+    }
+
+    public void setBasePrice(String myBasePrice){
+        this.basePrice = myBasePrice;
+    }
     @Override
     public int describeContents() {
         return 0;
@@ -153,5 +162,6 @@ public class ProductList implements Parcelable{
         dest.writeString(taxclass);
         dest.writeByte((byte) (isChecked ? 1 : 0));
         dest.writeInt(currentCount);
+        dest.writeString(basePrice);
     }
 }

@@ -377,6 +377,7 @@ public class ProductListFragment extends Fragment implements SearchView.OnQueryT
         for (ProductList productList: event.getmProduct().getProductList())
         {
             productList.setCurrentCount(1);
+            productList.setBasePrice(productList.getPrice());
             productListAdapter.addItem(productList);
         }
 
